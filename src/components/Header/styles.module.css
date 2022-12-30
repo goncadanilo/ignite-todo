@@ -3,6 +3,6 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 200px;
+  height: 12.5rem;
   background: var(--gray-700);
 }
