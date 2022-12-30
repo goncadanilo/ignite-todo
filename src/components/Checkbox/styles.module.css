@@ -1,0 +1,60 @@
+.container {
+  display: block;
+  position: relative;
+  padding-left: 1.0625rem;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.container input[type="checkbox"] {
+  position: absolute;
+  cursor: pointer;
+  opacity: 0;
+  height: 0;
+  width: 0;
+}
+
+.container span {
+  position: absolute;
+  top: 2px;
+  left: 0;
+  height: 1.0625rem;
+  width: 1.0625rem;
+  background: transparent;
+  border: 2px solid var(--blue);
+  border-radius: 999px;
+}
+
+.container:hover input ~ span {
+  border: 2px solid var(--blue-dark);
+}
+
+.container input:checked ~ span {
+  background: var(--purple-dark);
+  border: 2px solid var(--purple-dark);
+}
+
+.container span:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.container input:checked ~ span:after {
+  display: block;
+}
+
+.container span:after {
+  left: 4px;
+  top: 1px;
+  width: 3px;
+  height: 7px;
+  border: solid var(--gray-100);
+  border-width: 0 2px 2px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
