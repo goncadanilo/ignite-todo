@@ -1,5 +1,7 @@
 import { PlusCircle } from "phosphor-react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { EmptyTaskList } from "../EmptyTaskList";
+import { TaskItem } from "../TaskItem";
 import styles from "./styles.module.css";
 
 interface TaskData {
@@ -41,6 +43,18 @@ export function Tasks() {
     event.target.setCustomValidity("Esse campo é Obrigatório!");
   }
 
+  function updateTaskStatus(taskId: number) {
+    const tasksWithUpdatedOne = tasks.map((task) => {
+      if (task.id === taskId) {
+        return { ...task, isCompleted: !task.isCompleted };
+      }
+
+      return task;
+    });
+
+    setTasks(tasksWithUpdatedOne);
+  }
+
   return (
     <article>
       <form className={styles.taskForm} onSubmit={handleCreateNewTask}>
@@ -60,7 +74,7 @@ export function Tasks() {
       <div>
         <div className={styles.header}>
           <strong className={styles.createdTasks}>
-            Tarefas criadas <span>0</span>
+            Tarefas criadas <span>{tasks.length}</span>
           </strong>
 
           <strong className={styles.completedTasks}>
@@ -68,7 +82,19 @@ export function Tasks() {
           </strong>
         </div>
 
-        <EmptyTaskList />
+        {isTaskListEmpty ? (
+          <EmptyTaskList />
+        ) : (
+          tasks.map((task) => (
+            <TaskItem
+              key={task.id}
+              id={task.id}
+              title={task.title}
+              isCompleted={task.isCompleted}
+              updateTaskStatus={updateTaskStatus}
+            />
+          ))
+        )}
       </div>
     </article>
   );
