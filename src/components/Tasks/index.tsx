@@ -1,6 +1,6 @@
-import { orderBy } from "lodash";
+import { countBy, orderBy } from "lodash";
 import { PlusCircle } from "phosphor-react";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { EmptyTaskList } from "../EmptyTaskList";
 import { TaskItem } from "../TaskItem";
 import styles from "./styles.module.css";
@@ -49,9 +49,6 @@ export function Tasks() {
   function updateTaskStatus(taskId: number) {
     const tasksWithUpdatedOne = tasks.map((task) => {
       if (task.id === taskId) {
-        setCompletedTaskCount((state) =>
-          task.isCompleted ? state - 1 : state + 1
-        );
         return { ...task, isCompleted: !task.isCompleted };
       }
 
@@ -66,6 +63,11 @@ export function Tasks() {
 
     setTasks(tasksWithoutDeletedOne);
   }
+
+  useEffect(() => {
+    const { true: completedCount } = countBy(tasks, "isCompleted");
+    setCompletedTaskCount(completedCount || 0);
+  }, [tasks]);
 
   return (
     <article>
