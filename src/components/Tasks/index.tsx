@@ -14,6 +14,7 @@ interface TaskData {
 export function Tasks() {
   const [tasks, setTasks] = useState<TaskData[]>([] as TaskData[]);
   const [newTaskText, setNewTaskText] = useState("");
+  const [completedTaskCount, setCompletedTaskCount] = useState(0);
 
   const isTaskListEmpty = tasks.length === 0;
   const isNewTaskEmpty = newTaskText.trim().length === 0;
@@ -48,6 +49,9 @@ export function Tasks() {
   function updateTaskStatus(taskId: number) {
     const tasksWithUpdatedOne = tasks.map((task) => {
       if (task.id === taskId) {
+        setCompletedTaskCount((state) =>
+          task.isCompleted ? state - 1 : state + 1
+        );
         return { ...task, isCompleted: !task.isCompleted };
       }
 
@@ -80,7 +84,10 @@ export function Tasks() {
           </strong>
 
           <strong className={styles.completedTasks}>
-            Concluídas <span>0</span>
+            Concluídas{" "}
+            <span>
+              {isTaskListEmpty ? 0 : `${completedTaskCount} de ${tasks.length}`}
+            </span>
           </strong>
         </div>
 
@@ -93,7 +100,7 @@ export function Tasks() {
               id={task.id}
               title={task.title}
               isCompleted={task.isCompleted}
-              updateTaskStatus={updateTaskStatus}
+              onUpdateTaskStatus={updateTaskStatus}
             />
           ))
         )}

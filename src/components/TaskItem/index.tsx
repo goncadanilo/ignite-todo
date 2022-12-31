@@ -6,17 +6,17 @@ interface TaskItemProps {
   id: number;
   title: string;
   isCompleted: boolean;
-  updateTaskStatus: (taskId: number) => void;
+  onUpdateTaskStatus: (taskId: number) => void;
 }
 
 export function TaskItem({
   id,
   title,
   isCompleted,
-  updateTaskStatus,
+  onUpdateTaskStatus,
 }: TaskItemProps) {
   function handleStatusChange() {
-    updateTaskStatus(id);
+    onUpdateTaskStatus(id);
   }
 
   return (
