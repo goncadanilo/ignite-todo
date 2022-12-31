@@ -61,6 +61,12 @@ export function Tasks() {
     setTasks(tasksWithUpdatedOne);
   }
 
+  function deleteTask(taskId: number) {
+    const tasksWithoutDeletedOne = tasks.filter((task) => task.id !== taskId);
+
+    setTasks(tasksWithoutDeletedOne);
+  }
+
   return (
     <article>
       <form className={styles.taskForm} onSubmit={handleCreateNewTask}>
@@ -101,6 +107,7 @@ export function Tasks() {
               title={task.title}
               isCompleted={task.isCompleted}
               onUpdateTaskStatus={updateTaskStatus}
+              onDeleteTask={deleteTask}
             />
           ))
         )}

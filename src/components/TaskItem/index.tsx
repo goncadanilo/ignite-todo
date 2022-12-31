@@ -7,6 +7,7 @@ interface TaskItemProps {
   title: string;
   isCompleted: boolean;
   onUpdateTaskStatus: (taskId: number) => void;
+  onDeleteTask: (taskId: number) => void;
 }
 
 export function TaskItem({
@@ -14,9 +15,14 @@ export function TaskItem({
   title,
   isCompleted,
   onUpdateTaskStatus,
+  onDeleteTask,
 }: TaskItemProps) {
   function handleStatusChange() {
     onUpdateTaskStatus(id);
+  }
+
+  function handleDeleteTask() {
+    onDeleteTask(id);
   }
 
   return (
@@ -25,7 +31,7 @@ export function TaskItem({
       <span className={isCompleted ? styles.titleWhenCompleted : ""}>
         {title}
       </span>
-      <button title="Apagar tarefa">
+      <button title="Apagar tarefa" onClick={handleDeleteTask}>
         <Trash size={20} />
       </button>
     </div>
