@@ -1,3 +1,4 @@
+import { orderBy } from "lodash";
 import { PlusCircle } from "phosphor-react";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { EmptyTaskList } from "../EmptyTaskList";
@@ -16,6 +17,7 @@ export function Tasks() {
 
   const isTaskListEmpty = tasks.length === 0;
   const isNewTaskEmpty = newTaskText.trim().length === 0;
+  const tasksSortedByStatus = orderBy(tasks, ["isCompleted"]);
 
   function handleCreateNewTask(event: FormEvent) {
     event.preventDefault();
@@ -85,7 +87,7 @@ export function Tasks() {
         {isTaskListEmpty ? (
           <EmptyTaskList />
         ) : (
-          tasks.map((task) => (
+          tasksSortedByStatus.map((task) => (
             <TaskItem
               key={task.id}
               id={task.id}
